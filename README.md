@@ -1,0 +1,1 @@
+Basic hotel management system
