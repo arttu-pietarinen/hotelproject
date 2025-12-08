@@ -2,24 +2,24 @@
 
 1
 1
-0
-Arttu
+1
+empty
 1
 3408
 90
 
 2
 1
-0
-Arttu
+1
+empty
 1
 8673
 80
 
 3
 1
-0
-Arska
+1
+empty
 1
 6011
 90
