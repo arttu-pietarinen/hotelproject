@@ -1,5 +1,5 @@
 // Arttu Pietarinen
-// 5 point assignment
+// 5 point assignment (I hope so)
 // I could have used toupper to make the search not case-sensitive but ran out of time.
 
 // Including necessary libraries
@@ -42,6 +42,7 @@ void loadroominfo(vector<roominfo> &roomlist);
 bool file_exists(const string &name);
 void saverooms(const vector<roominfo> &roomlist);
 void clearConsole();
+bool isResNumberUsed(const vector<roominfo> &roomlist, int resnumber);
 int getNumberInRange(int min, int max, string instruction, string error);
 
 // Minimal main function
@@ -126,13 +127,13 @@ void searchres(vector<roominfo> &roomlist) {
     if (!anyreserved) {
         cout << "No reservations found." << endl;
         cout << "To make one, input 1. To cancel, input 0: ";
-	int choice = getNumberInRange(0, 1, "", "Invalid input. Please enter 0 or 1: ");
-	if (choice == 1) {
-			    clearConsole();
-	    newres(roomlist);
-	} else {
-	    clearConsole();
-	}
+        int choice = getNumberInRange(0, 1, "", "Invalid input. Please enter 0 or 1: ");
+        if (choice == 1) {
+            clearConsole();
+            newres(roomlist);
+        } else {
+            clearConsole();
+        }
         return;
     }
 
@@ -173,7 +174,7 @@ void searchres(vector<roominfo> &roomlist) {
             newsearch(roomlist);
         }
 
-	// Searching by guest name
+        // Searching by guest name
     } else if (choice == 2) {
         string name;
         cin.ignore();
@@ -191,14 +192,12 @@ void searchres(vector<roominfo> &roomlist) {
                 found = true;
                 cout << "Reservation found:" << endl;
                 printres(room);
+                newsearch(roomlist);
             }
         }
 
-        newsearch(roomlist);
-
         if (!found) {
-            cout << endl
-                 << "Reservation not found." << endl;
+            cout << "Reservation not found." << endl;
             newsearch(roomlist);
         }
     }
@@ -269,16 +268,18 @@ void newres(vector<roominfo> &roomlist) {
             cout << "Invalid number of beds. Please enter 1 or 2 (Or 0 to cancel)." << endl;
         }
 
-	// Checking availability of selected bed type
-	if (beds == 1 && count1 == 0) {
-	    cout << endl << "No available 1-bed rooms. Please choose 2 beds or cancel." << endl;
-	    beds = -1;
-	}
+        // Checking availability of selected bed type
+        if (beds == 1 && count1 == 0) {
+            cout << endl
+                 << "No available 1-bed rooms. Please choose 2 beds or cancel." << endl;
+            beds = -1;
+        }
 
-	if (beds == 2 && count2 == 0) {
-	    cout << endl << "No available 2-bed rooms. Please choose 1 bed or cancel." << endl;
-	    beds = -1;
-	}
+        if (beds == 2 && count2 == 0) {
+            cout << endl
+                 << "No available 2-bed rooms. Please choose 1 bed or cancel." << endl;
+            beds = -1;
+        }
 
     } while (beds != 1 && beds != 2);
 
@@ -288,7 +289,11 @@ void newres(vector<roominfo> &roomlist) {
         return;
     }
 
+    // Generating a unique reservation number
     int resnumber = 1000 + rand() % 9000;
+    while (isResNumberUsed(roomlist, resnumber)) {
+        resnumber = 1000 + rand() % 9000;
+    }
 
     int discountoptions[3] = {0, 10, 20};
     int discount = discountoptions[rand() % 3];
@@ -306,7 +311,7 @@ void newres(vector<roominfo> &roomlist) {
     cout << "Number of beds: " << beds << endl;
     cout << "Number of nights: " << nights << endl;
     cout << "Reservation number: " << resnumber << endl;
-    cout << "Total price: €" << totalprice << endl;
+    cout << "Total price: " << totalprice << " euros" << endl;
 
     int confirm;
     cout << endl
@@ -435,8 +440,7 @@ void resetsystem(vector<roominfo> &roomlist) {
 // Function to initialize room information
 void roominit(vector<roominfo> &roomlist) {
 
-
-	// Generating a random even number of rooms between 40 and 300
+    // Generating a random even number of rooms between 40 and 300
     int roomrand = 40 + rand() % 261;
 
     if (roomrand % 2 != 0) {
@@ -447,7 +451,6 @@ void roominit(vector<roominfo> &roomlist) {
 
     roomlist.clear();
     roomlist.resize(totalrooms);
-
 
     // Initializing room details
     for (int i = 0; i < totalrooms; i++) {
@@ -560,6 +563,16 @@ void clearConsole() {
 #endif
 }
 
+// Function to check if reservation number is not used
+bool isResNumberUsed(const vector<roominfo> &roomlist, int resnumber) {
+    for (const auto &room : roomlist) {
+        if (room.resnumber == resnumber) {
+            return true;
+        }
+    }
+    return false;
+}
+
 // Function to get a number within a specified range with input validation
 int getNumberInRange(int min, int max, string instruction, string error) {
     int number;
@@ -569,8 +582,8 @@ int getNumberInRange(int min, int max, string instruction, string error) {
 
     while (cin.fail() || (number < min || number > max)) {
         cout << error;
-        std::cin.clear();
-        std::cin.ignore(256, '\n');
+        cin.clear();
+        cin.ignore(256, '\n');
         cin >> number;
     }
 
