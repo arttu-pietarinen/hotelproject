@@ -1,1 +1,3 @@
-Basic hotel management system
+Basic hotel management system.
+
+Documentation is written in finnish.
