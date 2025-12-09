@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <random>
+#include <climits>
 #include <string>
 #include <vector>
 using namespace std;
