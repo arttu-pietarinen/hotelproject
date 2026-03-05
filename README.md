@@ -25,19 +25,7 @@ g++ hotelproject.cpp -o hotelproject
 
 ## How to use
 
-Run the program
-
-On mac/linux:
-```
-./hotelproject
-```
-
-Or on windows:
-```
-./hotelproject
-```
-
-You will be greeted with the main menu:
+Upon running you will be greeted with the main menu:
 
 ```
 Welcome to the Hotel Management System!
