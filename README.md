@@ -15,14 +15,6 @@ A C++ command-line hotel reservation management system built as a final project 
 
 ---
 
-## How to build
-
-```
-g++ hotelproject.cpp -o hotelproject
-```
-
----
-
 ## How to use
 
 Upon running you will be greeted with the main menu:
