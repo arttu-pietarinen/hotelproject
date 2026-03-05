@@ -25,8 +25,14 @@ g++ hotelproject.cpp -o hotelproject
 
 ## How to use
 
-Run the program:
+Run the program
 
+On mac/linux:
+```
+./hotelproject
+```
+
+Or on windows:
 ```
 ./hotelproject
 ```
